@@ -1,0 +1,101 @@
+.office-list {
+    /* overflow: hidden; */
+    border-radius: 8px;
+    position: relative;
+    z-index: 99;
+    transition: all 0.3s ease;
+}
+
+.office-list__wrapper {
+    z-index: 1;
+}
+
+.office-list__container {
+    border-radius: 8px;
+    border-width: 0px;
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, 0.1),
+        0px 4px 6px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.office-list__desc > * {
+    text-align: left;
+    line-height: 150%;
+}
+
+.office-list__desc .desc__caption {
+    color: var(--grey);
+}
+
+.office-list__detail {
+    /* transform: translateY(0%);
+    opacity: 1; */
+    position: absolute;
+    top: 0;
+    width: calc(380px - 64px);
+    padding: 24px 32px;
+    background-color: var(--white);
+    border-radius: 0px 0px 8px 8px;
+    box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, 0.1),
+        0px 4px 6px rgba(0, 0, 0, 0.05);
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+
+.office-list__detail .detail__content {
+    /* margin-bottom: 36px; */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.office-list__detail .detail__content > * {
+    line-height: 150%;
+    color: var(--dark-blue);
+}
+
+.office-list__detail .detail__content > .content__name {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.office-list__detail .detail__content > .content__email {
+    color: var(--accent-blue);
+}
+
+.office-list__detail .detail__content > .content__divider {
+    border: 1px solid #e8edf3;
+    margin: 8px 0px;
+}
+
+.office-list__detail .detail__action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.detail__action .action__button {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.detail__action > button:nth-child(1) {
+    color: var(--grey);
+}
+
+.detail__action > button:nth-child(2) {
+    color: var(--accent-red);
+}

@@ -1,0 +1,16 @@
+.create-location__container {
+    background-color: var(--accent-blue);
+    box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, 0.1),
+        0px 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border-width: 0;
+    color: var(--light-grey);
+    width: 100%;
+    cursor: pointer;
+}
