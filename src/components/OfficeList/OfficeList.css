@@ -40,7 +40,7 @@
     opacity: 1; */
     position: absolute;
     top: 0;
-    width: calc(380px - 64px);
+    width: 380px;
     padding: 24px 32px;
     background-color: var(--white);
     border-radius: 0px 0px 8px 8px;

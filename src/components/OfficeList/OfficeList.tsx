@@ -10,6 +10,8 @@ import { ReactComponent as ChevronDown } from "../../assets/icons/chevron-down.s
 import { ReactComponent as Pencil } from "../../assets/icons/pencil.svg";
 import { ReactComponent as Trash } from "../../assets/icons/trash.svg";
 import { COLOR, MIN_WIDTH } from "../../constants/common";
+import LocationForm from "../LocationForm/LocationForm";
+import "./OfficeList.css";
 
 interface IOfficeListProps {
     id: string;
@@ -44,6 +46,7 @@ const OfficeList = ({ id, title, caption, detail }: IOfficeListProps) => {
     };
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenForm, setIsOpenForm] = useState(false);
 
     const [wrapperStyle, setWrapperStyle] =
         useState<CSSProperties>(initialWrapperStyle);
@@ -55,6 +58,10 @@ const OfficeList = ({ id, title, caption, detail }: IOfficeListProps) => {
 
     const toggleOpen = () => {
         setIsOpen((prev) => !prev);
+    };
+
+    const toggleForm = () => {
+        setIsOpenForm((prev) => !prev);
     };
 
     useEffect(() => {
@@ -78,6 +85,16 @@ const OfficeList = ({ id, title, caption, detail }: IOfficeListProps) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
+
+    if (isOpenForm) {
+        return (
+            <LocationForm
+                onClose={toggleForm}
+                onSubmit={() => {}}
+                title="Edit Location"
+            />
+        );
+    }
 
     return (
         <div className="office-list" style={wrapperStyle}>
