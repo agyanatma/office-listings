@@ -2,16 +2,19 @@ import React from "react";
 import Textfield from "../Textfield/Textfield";
 import { ReactComponent as Close } from "../../assets/icons/close.svg";
 import "./LocationForm.css";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { string } from "yup/lib/locale";
 import Button from "../Button/Button";
+import Spinner from "../Spinner/Spinner";
+import { COLOR } from "../../constants/common";
 
 interface ILocationFormProps {
     title: string;
     onClose: () => void;
-    onSubmit: () => void;
+    onSubmit: SubmitHandler<typeof initialValues>;
+    isSubmitting?: boolean;
 }
 
 const FormSchema = yup.object({
@@ -23,23 +26,25 @@ const FormSchema = yup.object({
     phone: yup.string().required(),
 });
 
+const initialValues = {
+    title: "",
+    address: "",
+    fullname: "",
+    job: "",
+    email: "",
+    phone: "",
+};
+
 const LocationForm: React.FC<ILocationFormProps> = ({
     title,
     onClose,
     onSubmit,
+    isSubmitting = false,
 }) => {
-    const initialValues = {
-        title: "",
-        address: "",
-        fullname: "",
-        job: "",
-        email: "",
-        phone: "",
-    };
     const {
         control,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<typeof initialValues>({
         resolver: yupResolver(FormSchema),
     });
@@ -142,7 +147,10 @@ const LocationForm: React.FC<ILocationFormProps> = ({
                     )}
                 />
 
-                <Button title="Save" disabled={isSubmitting} />
+                <div className="location-form__footer">
+                    <Button title="Save" disabled={isSubmitting} />
+                    {isSubmitting && <Spinner stroke={COLOR.accentBlue} />}
+                </div>
             </form>
         </div>
     );

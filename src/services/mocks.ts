@@ -1,11 +1,65 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import { v4 as uuid } from "uuid";
+import { AddOfficeBody, OfficesResponse } from "../types";
+
+const DATA = [
+    {
+        id: uuid(),
+        title: "Headquarters",
+        address: "3763 W. Dallas St.",
+        detail: {
+            fullname: "Hellena John",
+            job: "Software Tester",
+            email: "georgia.young@example.com",
+            phone: "(808) 555-0111",
+        },
+    },
+    {
+        id: uuid(),
+        title: "Headquarters",
+        address: "3763 W. Dallas St.",
+        detail: {
+            fullname: "Hellena John",
+            job: "Software Tester",
+            email: "georgia.young@example.com",
+            phone: "(808) 555-0111",
+        },
+    },
+    {
+        id: uuid(),
+        title: "Headquarters",
+        address: "3763 W. Dallas St.",
+        detail: {
+            fullname: "Hellena John",
+            job: "Software Tester",
+            email: "georgia.young@example.com",
+            phone: "(808) 555-0111",
+        },
+    },
+];
 
 // This sets the mock adapter on the default instance
-let mock = new MockAdapter(axios);
+let mock = new MockAdapter(axios, { delayResponse: 1000 });
 
 // Mock any GET request to /users
 // arguments for reply are (status, data, headers)
 mock.onGet("/offices").reply(200, {
-    users: [{ id: 1, name: "John Smith" }],
+    code: 200,
+    message: "Get Success",
+    data: DATA,
 });
+mock.onPost("/office").reply(200, {
+    code: 200,
+    message: "The location has been added.",
+});
+
+export const fetchOffices = async () => {
+    const { data } = await axios.get<OfficesResponse>("/offices");
+    return data;
+};
+
+export const addOffice = async (values: AddOfficeBody) => {
+    const { data } = await axios.post("/office", values);
+    return data;
+};

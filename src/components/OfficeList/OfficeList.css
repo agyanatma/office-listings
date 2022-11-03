@@ -4,6 +4,7 @@
     position: relative;
     z-index: 99;
     transition: all 0.3s ease;
+    max-width: 380px;
 }
 
 .office-list__wrapper {

@@ -3,6 +3,7 @@
     box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, 0.1),
         0px 4px 6px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
+    z-index: 99;
 }
 
 .location-form__header {
@@ -41,4 +42,10 @@
 .location-form__sub-header > hr {
     margin-top: 16px;
     border: 0.5px solid var(--light-grey);
+}
+
+.location-form__footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }

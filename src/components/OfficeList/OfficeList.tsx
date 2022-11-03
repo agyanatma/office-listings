@@ -18,8 +18,8 @@ interface IOfficeListProps {
     title: string;
     caption: string;
     detail: {
-        name: string;
-        position: string;
+        fullname: string;
+        job: string;
         email: string;
         phone: string;
     };
@@ -60,9 +60,15 @@ const OfficeList = ({ id, title, caption, detail }: IOfficeListProps) => {
         setIsOpen((prev) => !prev);
     };
 
-    const toggleForm = () => {
-        setIsOpenForm((prev) => !prev);
+    const handleOpenForm = () => {
+        setIsOpenForm(true);
     };
+
+    const handleCloseForm = () => {
+        setIsOpenForm(false);
+    };
+
+    const handleDelete = () => {};
 
     useEffect(() => {
         if (isOpen) {
@@ -89,7 +95,7 @@ const OfficeList = ({ id, title, caption, detail }: IOfficeListProps) => {
     if (isOpenForm) {
         return (
             <LocationForm
-                onClose={toggleForm}
+                onClose={handleCloseForm}
                 onSubmit={() => {}}
                 title="Edit Location"
             />
@@ -136,19 +142,23 @@ const OfficeList = ({ id, title, caption, detail }: IOfficeListProps) => {
             >
                 <div className="office-list__detail" style={detailStyle}>
                     <div className="detail__content" ref={cardDetailRef}>
-                        <div className="content__name">{detail.name}</div>
-                        <div className="content__position">
-                            {detail.position}
-                        </div>
-                        <div className="content__email">{detail.email}</div>
-                        <div className="content__phone">{detail.phone}</div>
+                        <div className="content__name">{detail?.fullname}</div>
+                        <div className="content__position">{detail?.job}</div>
+                        <div className="content__email">{detail?.email}</div>
+                        <div className="content__phone">{detail?.phone}</div>
                         <hr className="content__divider" />
                         <div className="detail__action">
-                            <button className="action__button">
+                            <button
+                                className="action__button"
+                                onClick={handleOpenForm}
+                            >
                                 <Pencil />
                                 EDIT
                             </button>
-                            <button className="action__button">
+                            <button
+                                className="action__button"
+                                onClick={handleDelete}
+                            >
                                 <Trash />
                                 DELETE
                             </button>

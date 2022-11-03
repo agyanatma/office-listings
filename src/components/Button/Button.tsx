@@ -14,14 +14,16 @@ interface IButtonProps {
 const Button: React.FC<IButtonProps & Button> = ({
     title,
     fullWidth = false,
+    disabled,
     ...props
 }) => {
     const buttonStyles = classnames("button", {
         "button--fullwidth": fullWidth,
+        "button--disabled": disabled,
     });
 
     return (
-        <button className={buttonStyles} {...props}>
+        <button className={buttonStyles} disabled={disabled} {...props}>
             {title}
         </button>
     );
