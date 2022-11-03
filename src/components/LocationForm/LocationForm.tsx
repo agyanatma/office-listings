@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Textfield from "../Textfield/Textfield";
 import { ReactComponent as Close } from "../../assets/icons/close.svg";
 import "./LocationForm.css";
@@ -9,12 +9,14 @@ import { string } from "yup/lib/locale";
 import Button from "../Button/Button";
 import Spinner from "../Spinner/Spinner";
 import { COLOR } from "../../constants/common";
+import { OfficesResponse } from "../../types";
 
 interface ILocationFormProps {
     title: string;
     onClose: () => void;
     onSubmit: SubmitHandler<typeof initialValues>;
     isSubmitting?: boolean;
+    values?: Omit<OfficesResponse["data"][number], "id">;
 }
 
 const FormSchema = yup.object({
@@ -40,14 +42,29 @@ const LocationForm: React.FC<ILocationFormProps> = ({
     onClose,
     onSubmit,
     isSubmitting = false,
+    values,
 }) => {
     const {
         control,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<typeof initialValues>({
         resolver: yupResolver(FormSchema),
     });
+
+    useEffect(() => {
+        if (values) {
+            reset({
+                title: values?.title ?? "",
+                address: values?.address ?? "",
+                fullname: values?.detail?.fullname ?? "",
+                job: values?.detail?.job ?? "",
+                email: values?.detail?.email ?? "",
+                phone: values?.detail?.phone ?? "",
+            });
+        }
+    }, [values, reset]);
 
     return (
         <div className="location-form">

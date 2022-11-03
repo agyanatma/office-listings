@@ -39,11 +39,8 @@ const DATA = [
     },
 ];
 
-// This sets the mock adapter on the default instance
-let mock = new MockAdapter(axios, { delayResponse: 1000 });
+let mock = new MockAdapter(axios, { delayResponse: 500 });
 
-// Mock any GET request to /users
-// arguments for reply are (status, data, headers)
 mock.onGet("/offices").reply(200, {
     code: 200,
     message: "Get Success",
@@ -53,6 +50,14 @@ mock.onPost("/office").reply(200, {
     code: 200,
     message: "The location has been added.",
 });
+mock.onPut(/\/office\/\d+/).reply(200, {
+    code: 200,
+    message: "The location has been updated.",
+});
+mock.onDelete(/\/office\/\d+/).reply(200, {
+    code: 200,
+    message: "The location has been deleted.",
+});
 
 export const fetchOffices = async () => {
     const { data } = await axios.get<OfficesResponse>("/offices");
@@ -61,5 +66,15 @@ export const fetchOffices = async () => {
 
 export const addOffice = async (values: AddOfficeBody) => {
     const { data } = await axios.post("/office", values);
+    return data;
+};
+
+export const updateOffice = async (id: string, values: AddOfficeBody) => {
+    const { data } = await axios.put(`/office/${id}`, values);
+    return data;
+};
+
+export const deleteOffice = async (id: string) => {
+    const { data } = await axios.delete(`/office/${id}`);
     return data;
 };

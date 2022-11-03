@@ -12,6 +12,10 @@ import { ReactComponent as Trash } from "../../assets/icons/trash.svg";
 import { COLOR, MIN_WIDTH } from "../../constants/common";
 import LocationForm from "../LocationForm/LocationForm";
 import "./OfficeList.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateOffice } from "../../services/mocks";
+import { AddOfficeBody, OfficesResponse } from "../../types";
+import { v4 as uuid } from "uuid";
 
 interface IOfficeListProps {
     id: string;
@@ -25,7 +29,68 @@ interface IOfficeListProps {
     };
 }
 
-const OfficeList = ({ id, title, caption, detail }: IOfficeListProps) => {
+const OfficeList = ({
+    id,
+    title: defaultTitle,
+    caption: defaultCaption,
+    detail: defaultDetail,
+}: IOfficeListProps) => {
+    const [mockedData, setMockedData] = useState({
+        id,
+        title: defaultTitle,
+        address: defaultCaption,
+        detail: defaultDetail,
+    });
+
+    const { title, address: caption, detail } = mockedData;
+
+    const queryClient = useQueryClient();
+    const { mutate, isLoading } = useMutation({
+        mutationFn: (values) => updateOffice(id, values),
+        onMutate: (values: AddOfficeBody) => {
+            const prevOffices = queryClient.getQueryData<OfficesResponse>([
+                "offices",
+            ]);
+
+            if (prevOffices) {
+                let newOffices = prevOffices.data;
+                const idx = prevOffices.data.findIndex((of) => of.id === id);
+
+                newOffices[idx] = {
+                    id: id,
+                    title: values.title,
+                    address: values.address,
+                    detail: {
+                        fullname: values.fullname,
+                        job: values.job,
+                        email: values.email,
+                        phone: values.phone,
+                    },
+                };
+
+                setMockedData({
+                    id: id,
+                    title: values.title,
+                    address: values.address,
+                    detail: {
+                        fullname: values.fullname,
+                        job: values.job,
+                        email: values.email,
+                        phone: values.phone,
+                    },
+                });
+
+                queryClient.setQueryData<OfficesResponse>(["offices"], {
+                    ...prevOffices,
+                    data: [...newOffices],
+                });
+            }
+        },
+        onSuccess: () => {
+            setIsOpenForm(false);
+        },
+    });
+
     const cardRef = useRef<HTMLButtonElement>(null);
     const cardDetailRef = useRef<HTMLDivElement>(null);
 
@@ -96,8 +161,16 @@ const OfficeList = ({ id, title, caption, detail }: IOfficeListProps) => {
         return (
             <LocationForm
                 onClose={handleCloseForm}
-                onSubmit={() => {}}
+                onSubmit={(values) => {
+                    mutate(values);
+                }}
                 title="Edit Location"
+                values={{
+                    title,
+                    address: caption,
+                    detail,
+                }}
+                isSubmitting={isLoading}
             />
         );
     }
