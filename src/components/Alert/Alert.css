@@ -1,0 +1,9 @@
+.alert__message {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--dark-blue);
+    text-transform: uppercase;
+}

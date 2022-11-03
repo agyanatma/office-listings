@@ -16,6 +16,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteOffice, updateOffice } from "../../services/mocks";
 import { AddOfficeBody, OfficesResponse } from "../../types";
 import { v4 as uuid } from "uuid";
+import { toast } from "react-toastify";
+import Alert from "../Alert/Alert";
 
 interface IOfficeListProps {
     id: string;
@@ -90,6 +92,7 @@ const OfficeList = ({
         },
         onSuccess: () => {
             setIsOpenForm(false);
+            toast(<Alert message="The location has been updated." />);
         },
     });
 

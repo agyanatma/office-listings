@@ -54,3 +54,27 @@ footer {
     color: var(--grey);
     line-height: 150%;
 }
+
+.toast__container {
+    width: 100vw;
+    min-height: 80px;
+    padding: 12px 32px;
+    background-color: var(--white);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    text-align: center;
+}
+
+.Toastify__toast-container--top-center {
+    top: 0 !important;
+    width: 100vw !important;
+}
+
+.Toastify__toast-container {
+    padding: 0px !important;
+}
+
+.Toastify__close-button {
+    align-self: unset !important;
+}

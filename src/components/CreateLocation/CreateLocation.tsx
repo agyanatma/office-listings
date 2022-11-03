@@ -6,6 +6,8 @@ import { addOffice } from "../../services/mocks";
 import LocationForm from "../LocationForm/LocationForm";
 import "./CreateLocation.css";
 import { AddOfficeBody, OfficesResponse } from "../../types";
+import { toast } from "react-toastify";
+import Alert from "../Alert/Alert";
 
 interface ICreateLocationProps {}
 
@@ -40,6 +42,7 @@ const CreateLocation = (props: ICreateLocationProps) => {
         },
         onSuccess: () => {
             setIsOpenForm(false);
+            toast(<Alert message="The location has been added." />);
         },
     });
     const [isOpenForm, setIsOpenForm] = useState(false);

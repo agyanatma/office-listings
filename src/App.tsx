@@ -18,6 +18,9 @@ import Spinner from "./components/Spinner/Spinner";
 import { COLOR } from "./constants/common";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { OfficesResponse } from "./types";
+import { Slide, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Alert from "./components/Alert/Alert";
 
 const Root = () => {
     const { data, status } = useQuery({
@@ -48,6 +51,7 @@ const Root = () => {
             },
             onSuccess: () => {
                 setOfficeId(undefined);
+                toast(<Alert message="The location has been deleted." />);
             },
         });
 
@@ -102,6 +106,19 @@ function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
+            <ToastContainer
+                toastClassName={() => "toast__container"}
+                bodyClassName={() => "toast__body"}
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop
+                closeOnClick
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                transition={Slide}
+            />
             <Root />
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
