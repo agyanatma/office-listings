@@ -13,7 +13,7 @@ import { COLOR, MIN_WIDTH } from "../../constants/common";
 import LocationForm from "../LocationForm/LocationForm";
 import "./OfficeList.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateOffice } from "../../services/mocks";
+import { deleteOffice, updateOffice } from "../../services/mocks";
 import { AddOfficeBody, OfficesResponse } from "../../types";
 import { v4 as uuid } from "uuid";
 
@@ -27,6 +27,7 @@ interface IOfficeListProps {
         email: string;
         phone: string;
     };
+    onDelete: () => void;
 }
 
 const OfficeList = ({
@@ -34,6 +35,7 @@ const OfficeList = ({
     title: defaultTitle,
     caption: defaultCaption,
     detail: defaultDetail,
+    onDelete,
 }: IOfficeListProps) => {
     const [mockedData, setMockedData] = useState({
         id,
@@ -133,7 +135,7 @@ const OfficeList = ({
         setIsOpenForm(false);
     };
 
-    const handleDelete = () => {};
+    const handleDelete = onDelete;
 
     useEffect(() => {
         if (isOpen) {

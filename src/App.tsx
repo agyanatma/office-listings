@@ -10,17 +10,52 @@ import {
     useQuery,
     QueryClient,
     QueryClientProvider,
+    useMutation,
+    useQueryClient,
 } from "@tanstack/react-query";
-import { fetchOffices } from "./services/mocks";
+import { deleteOffice, fetchOffices } from "./services/mocks";
 import Spinner from "./components/Spinner/Spinner";
 import { COLOR } from "./constants/common";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { OfficesResponse } from "./types";
 
 const Root = () => {
     const { data, status } = useQuery({
         queryKey: ["offices"],
         queryFn: fetchOffices,
     });
+    const [officeId, setOfficeId] = useState<string>();
+
+    const queryClient = useQueryClient();
+    const { mutate: mutateDeleteOffice, isLoading: isSubmitDelete } =
+        useMutation({
+            mutationFn: () => deleteOffice(officeId ?? ""),
+            onMutate: () => {
+                const prevOffices = queryClient.getQueryData<OfficesResponse>([
+                    "offices",
+                ]);
+
+                if (prevOffices) {
+                    const newOffices = prevOffices.data.filter(
+                        (of) => of.id !== officeId
+                    );
+
+                    queryClient.setQueryData<OfficesResponse>(["offices"], {
+                        ...prevOffices,
+                        data: [...newOffices],
+                    });
+                }
+            },
+            onSuccess: () => {
+                setOfficeId(undefined);
+            },
+        });
+
+    useEffect(() => {
+        if (officeId) {
+            mutateDeleteOffice();
+        }
+    }, [officeId, mutateDeleteOffice]);
 
     return (
         <Container>
@@ -41,6 +76,7 @@ const Root = () => {
                         detail={{
                             ...of.detail,
                         }}
+                        onDelete={() => setOfficeId(of.id)}
                     />
                 ))}
             </main>
