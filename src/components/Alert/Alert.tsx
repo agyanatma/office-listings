@@ -8,7 +8,7 @@ interface IAlertProps {
 
 const Alert = ({ message }: IAlertProps) => {
     return (
-        <div className="alert__message">
+        <div className="alert__message" data-testid="alert-message">
             <Check />
             <span>{message}</span>
         </div>

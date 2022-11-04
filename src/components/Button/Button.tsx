@@ -2,7 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import "./Button.css";
 
-type Button = React.DetailedHTMLProps<
+type ButtonType = React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
 >;
@@ -11,7 +11,7 @@ interface IButtonProps {
     fullWidth?: boolean;
 }
 
-const Button: React.FC<IButtonProps & Button> = ({
+const Button: React.FC<IButtonProps & ButtonType> = ({
     title,
     fullWidth = false,
     disabled,
@@ -23,7 +23,12 @@ const Button: React.FC<IButtonProps & Button> = ({
     });
 
     return (
-        <button className={buttonStyles} disabled={disabled} {...props}>
+        <button
+            className={buttonStyles}
+            disabled={disabled}
+            data-testid="button"
+            {...props}
+        >
             {title}
         </button>
     );
