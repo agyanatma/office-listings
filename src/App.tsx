@@ -27,33 +27,33 @@ const Root = () => {
         queryKey: ["offices"],
         queryFn: fetchOffices,
     });
+
     const [officeId, setOfficeId] = useState<string>();
 
     const queryClient = useQueryClient();
-    const { mutate: mutateDeleteOffice, isLoading: isSubmitDelete } =
-        useMutation({
-            mutationFn: () => deleteOffice(officeId ?? ""),
-            onMutate: () => {
-                const prevOffices = queryClient.getQueryData<OfficesResponse>([
-                    "offices",
-                ]);
+    const { mutate: mutateDeleteOffice } = useMutation({
+        mutationFn: () => deleteOffice(officeId ?? ""),
+        onMutate: () => {
+            const prevOffices = queryClient.getQueryData<OfficesResponse>([
+                "offices",
+            ]);
 
-                if (prevOffices) {
-                    const newOffices = prevOffices.data.filter(
-                        (of) => of.id !== officeId
-                    );
+            if (prevOffices) {
+                const newOffices = prevOffices.data.filter(
+                    (of) => of.id !== officeId
+                );
 
-                    queryClient.setQueryData<OfficesResponse>(["offices"], {
-                        ...prevOffices,
-                        data: [...newOffices],
-                    });
-                }
-            },
-            onSuccess: () => {
-                setOfficeId(undefined);
-                toast(<Alert message="The location has been deleted." />);
-            },
-        });
+                queryClient.setQueryData<OfficesResponse>(["offices"], {
+                    ...prevOffices,
+                    data: [...newOffices],
+                });
+            }
+        },
+        onSuccess: () => {
+            setOfficeId(undefined);
+            toast(<Alert message="The location has been deleted." />);
+        },
+    });
 
     useEffect(() => {
         if (officeId) {

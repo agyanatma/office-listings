@@ -1,9 +1,10 @@
+import { QueryObserverResult } from "@tanstack/react-query";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { v4 as uuid } from "uuid";
 import { AddOfficeBody, OfficesResponse } from "../types";
 
-const DATA = [
+export const DATA = [
     {
         id: uuid(),
         title: "Headquarters",

@@ -45,7 +45,7 @@ const LocationForm: React.FC<ILocationFormProps> = ({
     values,
 }) => {
     const {
-        control,
+        register,
         handleSubmit,
         formState: { errors },
         reset,
@@ -67,43 +67,36 @@ const LocationForm: React.FC<ILocationFormProps> = ({
     }, [values, reset]);
 
     return (
-        <div className="location-form">
+        <div className="location-form" data-testid="location-form">
             <div className="location-form__header">
                 <div className="header__title">{title}</div>
-                <button className="header__close" onClick={onClose}>
+                <button
+                    className="header__close"
+                    onClick={onClose}
+                    data-testid="close-button"
+                >
                     <Close />
                 </button>
             </div>
 
             <form
+                data-testid="location-form-submit"
                 className="location-form__form"
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <Controller
-                    name="title"
-                    control={control}
-                    render={({ field }) => (
-                        <Textfield
-                            label="Title"
-                            placeholder="Headquarters"
-                            required
-                            error={errors.title?.message}
-                            {...field}
-                        />
-                    )}
+                <Textfield
+                    label="Title"
+                    placeholder="Headquarters"
+                    required
+                    error={errors.title?.message}
+                    {...register("title")}
                 />
-                <Controller
-                    name="address"
-                    control={control}
-                    render={({ field }) => (
-                        <Textfield
-                            label="Enter the address"
-                            placeholder="3763 W. Dallas St."
-                            required
-                            error={errors.address?.message}
-                            {...field}
-                        />
-                    )}
+                <Textfield
+                    label="Enter the address"
+                    placeholder="3763 W. Dallas St."
+                    required
+                    error={errors.address?.message}
+                    {...register("address")}
                 />
 
                 <div className="location-form__sub-header">
@@ -111,61 +104,42 @@ const LocationForm: React.FC<ILocationFormProps> = ({
                     <hr />
                 </div>
 
-                <Controller
-                    name="fullname"
-                    control={control}
-                    render={({ field }) => (
-                        <Textfield
-                            label="Full name"
-                            placeholder="John Michael"
-                            required
-                            error={errors.fullname?.message}
-                            {...field}
-                        />
-                    )}
+                <Textfield
+                    label="Full name"
+                    placeholder="John Michael"
+                    required
+                    error={errors.fullname?.message}
+                    {...register("fullname")}
                 />
-                <Controller
-                    name="job"
-                    control={control}
-                    render={({ field }) => (
-                        <Textfield
-                            label="Job position"
-                            placeholder="3763 W. Dallas St."
-                            required
-                            error={errors.job?.message}
-                            {...field}
-                        />
-                    )}
+                <Textfield
+                    label="Job position"
+                    placeholder="3763 W. Dallas St."
+                    required
+                    error={errors.job?.message}
+                    {...register("job")}
                 />
-                <Controller
-                    name="email"
-                    control={control}
-                    render={({ field }) => (
-                        <Textfield
-                            label="Email"
-                            placeholder="name@example.com"
-                            required
-                            error={errors.email?.message}
-                            {...field}
-                        />
-                    )}
+                <Textfield
+                    label="Email"
+                    placeholder="name@example.com"
+                    required
+                    error={errors.email?.message}
+                    {...register("email")}
                 />
-                <Controller
-                    name="phone"
-                    control={control}
-                    render={({ field }) => (
-                        <Textfield
-                            label="Phone"
-                            placeholder="(xxx) xxx-xxxx"
-                            required
-                            error={errors.phone?.message}
-                            {...field}
-                        />
-                    )}
+                <Textfield
+                    label="Phone"
+                    placeholder="(xxx) xxx-xxxx"
+                    required
+                    error={errors.phone?.message}
+                    {...register("phone")}
                 />
 
                 <div className="location-form__footer">
-                    <Button title="Save" disabled={isSubmitting} />
+                    <Button
+                        title="Save"
+                        data-testid="submit-location"
+                        disabled={isSubmitting}
+                        type="submit"
+                    />
                     {isSubmitting && <Spinner stroke={COLOR.accentBlue} />}
                 </div>
             </form>

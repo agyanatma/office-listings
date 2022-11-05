@@ -56,7 +56,6 @@ const CreateLocation = (props: ICreateLocationProps) => {
             <LocationForm
                 onClose={toggleForm}
                 onSubmit={(values) => {
-                    console.log(values);
                     mutate(values);
                 }}
                 title="New Location"
@@ -66,7 +65,11 @@ const CreateLocation = (props: ICreateLocationProps) => {
     }
 
     return (
-        <button className="create-location__container" onClick={toggleForm}>
+        <button
+            className="create-location__container"
+            data-testid="create-location"
+            onClick={toggleForm}
+        >
             Add New Location
             <Add />
         </button>

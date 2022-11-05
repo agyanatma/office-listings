@@ -181,13 +181,18 @@ const OfficeList = ({
     }
 
     return (
-        <div className="office-list" style={wrapperStyle}>
+        <div
+            className="office-list"
+            data-testid="office-list"
+            style={wrapperStyle}
+        >
             <div style={{ position: "relative" }}>
                 <button
                     className="office-list__container"
                     style={containerStyle}
                     onClick={toggleOpen}
                     ref={cardRef}
+                    data-testid="office-button"
                 >
                     <div className="office-list__desc">
                         <div className="desc__title h4">{title}</div>
@@ -208,6 +213,7 @@ const OfficeList = ({
                             transition: "all 0.5s ease",
                             color: isOpen ? COLOR.white : COLOR.accentBlue,
                         }}
+                        data-testid="office-chevron"
                     >
                         <ChevronDown />
                     </div>
@@ -229,6 +235,7 @@ const OfficeList = ({
                             <button
                                 className="action__button"
                                 onClick={handleOpenForm}
+                                data-testid="edit-office"
                             >
                                 <Pencil />
                                 EDIT
@@ -236,6 +243,7 @@ const OfficeList = ({
                             <button
                                 className="action__button"
                                 onClick={handleDelete}
+                                data-testid="delete-office"
                             >
                                 <Trash />
                                 DELETE
