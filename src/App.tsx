@@ -65,7 +65,6 @@ const Root = () => {
         <Container>
             <header className="display-2 accent">Offices</header>
             <main>
-                <pre>{process.env.REACT_APP_API_URL}</pre>
                 <CreateLocation />
                 {status === "loading" && (
                     <div style={{ textAlign: "center" }}>
