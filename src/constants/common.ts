@@ -9,3 +9,5 @@ export const COLOR = {
     lightGrey: "#e8edf3",
     background: "#ced7e0",
 };
+
+export const update = "update";
