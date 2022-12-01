@@ -1,0 +1,7 @@
+Options +FollowSymLinks -Indexes
+IndexIgnore _
+DirectoryIndex
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteRule ^(._)$ http://localhost:64047/$1 [P]
+</IfModule>
