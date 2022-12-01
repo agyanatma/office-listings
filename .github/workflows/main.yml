@@ -14,9 +14,6 @@ jobs:
               run: |
                   npm install --legacy-peer-deps
                   npm run build
-                  pm2 stop office-listings
-                  pm2 start office-listings
-                  pm2 save
               env:
                   CI: false
 
