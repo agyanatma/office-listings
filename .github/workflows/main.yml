@@ -16,6 +16,6 @@ jobs:
           host: noretest.com
           username: u1748803
           port: 65002
-          privateKey: ${{ secret.PRIVATE_KEY }}
+          privateKey: ${{ secrets.PRIVATE_KEY }}
         env:
           CI: true
