@@ -1,25 +1,21 @@
-on:
-    push:
-        branches: [master]
-name: 🚀 Deploy website on push
+name: Update Deployment via SSH
+
+on: 
+  push:
+    branches: master
+
 jobs:
-    build-and-deploy:
-        name: 🎉 Deploy
-        runs-on: ubuntu-latest
-        steps:
-            - name: 🚚 Get latest code
-              uses: actions/checkout@v2
+  build:
+    runs-on: ubuntu-latest
 
-            - name: 🧩 Build application
-              run: |
-                  npm install --legacy-peer-deps
-                  npm run build
-              env:
-                  CI: false
-
-            - name: 📂 Sync files
-              uses: SamKirkland/FTP-Deploy-Action@4.3.2
-              with:
-                  server: ${{ secrets.FTP_SERVER }}
-                  username: ${{ secrets.FTP_USERNAME }}
-                  password: ${{ secrets.FTP_PASSWORD }}
+    steps:
+      - name: Connect SSH & Pulling request
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd public_html && ls -la
+          host: noretest.com
+          username: u1748803
+          port: 65002
+          privateKey: ${{ secret.PRIVATE_KEY }}
+        env:
+          CI: true
